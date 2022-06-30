@@ -1,11 +1,10 @@
 <template>
   <div>
-    <ul>
-      <li v-for="item in arr" :key="item">{{ item }}</li>
-    </ul>
-    <button @click="reverse">数组翻转</button>
-    <button @click="slice">截取前3个元素</button>
-    <button @click="change">更新第一个元素</button>
+    <h1>{{ obj.a }}</h1>
+    <button @click="change">改变</button>
+    <br>
+    <h1>{{ obj1 && obj1.a }}</h1>
+    <button @click="change1">改变1</button>
   </div>
 </template>
 
@@ -13,21 +12,22 @@
 export default {
   data() {
     return {
-      arr: [1, 2, 3, 4, 5]
+      obj: {
+        b: 11,
+        c: 12
+      },
+      obj1: {}
     }
   },
   methods: {
-    reverse() {
-      this.arr.reverse();
-      console.log(this.arr);
+    change() {
+      this.$set(this.obj, 'a', 9)
+      console.log(this.obj);
     },
-    slice() {
-      this.arr.slice(0, 3)
-      console.log(this.arr.slice(0, 3));
-    },
-    change(){
-      this.$set(this.arr,0,1000)
-      console.log(this.arr);
+    change1() {
+      this.obj1 = {
+        a: 20
+      }
     }
   }
 }
