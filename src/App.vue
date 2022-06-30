@@ -1,7 +1,12 @@
 <template>
   <div>
-    <p :class="{ active: activeFlag }" class="ppp">我是摩拉克斯,你有带钱吗</p>
-    <button @click="activeFlag = !activeFlag">click me</button>
+    <ul>
+      <li :class="{ active: index === currentIndex }" v-for="(item, index) in navs" :key="item" @click="toggle(index)">
+        {{
+            item
+        }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -9,18 +14,40 @@
 export default {
   data() {
     return {
-      activeFlag: false
+      navs: ['大学起点', '高中起点', '初中起点', '小学起点'],
+      currentIndex: 0
+    }
+  },
+  methods: {
+    toggle(val) {
+      this.currentIndex = val
+      console.log(val);
     }
   }
 }
 </script>
 
 <style>
-.active {
-  color: rgb(0, 225, 255);
+ul {
+  list-style: none;
+  border-radius: 10px;
+  width: 400px;
+  overflow: hidden;
+  padding: 0;
 }
 
-.ppp {
-  border: 10px solid rgb(190, 244, 159);
+ul li {
+  float: left;
+  width: 100px;
+  height: 40px;
+  background-color: #ccc;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+}
+
+li.active {
+  background-color: blue;
 }
 </style>
