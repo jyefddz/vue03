@@ -1,16 +1,11 @@
 <template>
   <div>
     <ul>
-      <li v-for="item in stuArr" :key="item.id">{{ item.name }}-{{ item.sex }}-{{ item.hobby }}</li>
+      <li v-for="item in arr" :key="item">{{ item }}</li>
     </ul>
-    <br>
-    <ul>
-      <li v-for="(item, key) in tObj" :key="item">{{ item }}-{{ key }}</li>
-    </ul>
-    <br>
-    <ul>
-      <li v-for="item in count" :key="item">{{ item }}</li>
-    </ul>
+    <button @click="reverse">数组翻转</button>
+    <button @click="slice">截取前3个元素</button>
+    <button @click="change">更新第一个元素</button>
   </div>
 </template>
 
@@ -18,26 +13,21 @@
 export default {
   data() {
     return {
-      stuArr: [
-        {
-          id: 1001,
-          name: "孙悟空",
-          sex: "男",
-          hobby: "吃桃子",
-        },
-        {
-          id: 1002,
-          name: "猪八戒",
-          sex: "男",
-          hobby: "背媳妇",
-        },
-      ],
-      tObj: {
-        name: "小黑",
-        age: 18,
-        class: "1期",
-      },
-      count: 10
+      arr: [1, 2, 3, 4, 5]
+    }
+  },
+  methods: {
+    reverse() {
+      this.arr.reverse();
+      console.log(this.arr);
+    },
+    slice() {
+      this.arr.slice(0, 3)
+      console.log(this.arr.slice(0, 3));
+    },
+    change(){
+      this.$set(this.arr,0,1000)
+      console.log(this.arr);
     }
   }
 }
