@@ -84,8 +84,8 @@ export default {
             console.log(index);
             this.list.splice(index, 1);
         },
-        edit(id){
-            
+        edit(id) {
+
         }
     }
 }
