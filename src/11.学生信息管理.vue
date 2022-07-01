@@ -2,21 +2,21 @@
     <div id="app">
         <div>
             <span>姓名:</span>
-            <input type="text" class="name" v-model.trim="name" />
+            <input type="text" placeholder="请输入姓名" v-model.trim="name" />
         </div>
         <div>
             <span>年龄:</span>
-            <input type="number" class="age" v-model.number="age" />
+            <input type="number" placeholder="请输入年龄" v-model.number="age" />
         </div>
         <div>
             <span>性别:</span>
-            <select class="sex">
-                <option value="男">男</option>
-                <option value="女">女</option>
+            <select v-model="sex">
+                <option value=1>男</option>
+                <option value=0>女</option>
             </select>
         </div>
         <div>
-            <button @click.prevent="addOrEditFn">添加/修改</button>
+            <button @click="addFn">{{ isEdit ? '编辑' : '添加' }}</button>
         </div>
         <div>
             <table border="1" cellpadding="10" cellspacing="0">
@@ -31,10 +31,10 @@
                     <td>{{ item.id }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.age }}</td>
-                    <td>{{ item.sex }}</td>
+                    <td>{{ { 0: '女', 1: '男' }[item.sex] }}</td>
                     <td>
                         <button @click.prevent="del(item.id)">删除</button>
-                        <button @click.prevent="edit(item.id)">编辑</button>
+                        <button @click="editFn(item)">编辑</button>
                     </td>
                 </tr>
             </table>
@@ -50,42 +50,66 @@ export default {
                     id: 1,
                     name: "张三",
                     age: 12,
-                    sex: "男"
+                    sex: 1
                 },
                 {
                     id: 2,
                     name: "王二麻子",
                     age: 22,
-                    sex: "男"
+                    sex: 0
                 }
             ],
             name: '',
-            age: 0,
-            gender: ''
+            age: '',
+            sex: 0,
+            isEdit: false, //false 代表没有处于编辑状态
+            currentId: ''
         }
     },
     methods: {
-        addOrEditFn() {
-            if (this.name == '' || this.age <= 0 || this.age >= 200) {
-                return alert('请输入正确的名字和年龄')
+        addFn() {
+            if (this.isEdit) {
+                //处于编辑状态
+                const index = this.list.findIndex((ele) => ele.id == this.currentId)
+                this.list[index].name = this.name
+                this.list[index].age = this.age
+                this.list[index].sex = this.sex
+                this.isEdit = false //变回添加状态
+                this.currentId = ''
+                this.clearFn()
+                alert('修改完成')
+                return
             }
-            const id = this.list[this.list.length - 1] ? this.list[this.list.length - 1].id + 1 : 100
+            if (this.name == '' || this.age == '' || this.age <= 0 || this.age >= 200) {
+                this.clearFn()
+                return alert('请输入正确的姓名和年龄')
+            }
+            const id = this.list[this.list.length - 1] ? this.list[this.list.length - 1].id + 1 : 1
             this.list.push({
                 id,
                 name: this.name,
                 age: this.age,
-                sex: document.querySelector('.sex').value
+                sex: this.sex,
             })
-            this.name = '',
-                this.age = 0
+            this.clearFn()
+            alert('添加完成')
         },
         del(id) {
             const index = this.list.findIndex((ele) => id == ele.id)//传递过来的id等于ele里面的id
             console.log(index);
             this.list.splice(index, 1);
         },
-        edit(id) {
-
+        editFn(data) {
+            this.isEdit = true;
+            this.name = data.name
+            this.age = data.age
+            this.sex = data.sex
+            this.currentId = data.id
+        },
+        clearFn() {
+            this.name = '',
+                this.age = '',
+                this.sex = 0
         }
     }
 }
