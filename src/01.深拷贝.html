@@ -13,16 +13,16 @@
         const _completeDeepClone = (target, map = new Map()) => {
             // 补全代码
             for (const k in target) {
-                var newObj = map.set(k,target[k])
+                var newObj = map.set(k, target[k])
             }
             console.log(newObj);
+            console.log(target);
         }
         const d = {
-            name: ['a', 'b', 'c'],
-            oo: {
-                kk: 'uu',
-                yy: 'pp',
-            },
+            name: 'aa',
+            age: 18,
+            bb: [1, 2, 3, 4, 5],
+            cc: { sing: 'qq' }
         }
         _completeDeepClone(d)
     </script>
