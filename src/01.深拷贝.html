@@ -12,8 +12,19 @@
     <script type="text/javascript">
         const _completeDeepClone = (target, map = new Map()) => {
             // 补全代码
-            
+            for (const k in target) {
+                var newObj = map.set(k,target[k])
+            }
+            console.log(newObj);
         }
+        const d = {
+            name: ['a', 'b', 'c'],
+            oo: {
+                kk: 'uu',
+                yy: 'pp',
+            },
+        }
+        _completeDeepClone(d)
     </script>
 </body>
 
